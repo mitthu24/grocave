@@ -68,7 +68,7 @@ export default function AboutSection({ onOpenContact }) {
               Born to Replace Broken Workflows with Bulletproof Tech
             </h3>
             <p>
-              Founded under the leadership of <strong className="text-white">Rambahadur Mahato</strong>, <strong className="text-white">GROCAVE</strong> was formed with a singular conviction: businesses lose millions every year to fragmented spreadsheets, sluggish legacy applications, and disconnected manual labor.
+              Founded with a mission to empower modern business, <strong className="text-white">GROCAVE</strong> was formed with a singular conviction: businesses lose millions every year to fragmented spreadsheets, sluggish legacy applications, and disconnected manual labor.
             </p>
             <p>
               We bring enterprise-grade cloud architecture, modern microservices, and automated intelligence to companies that demand reliable software that just works — whether accessed on a high-speed fiber desktop or a mobile smartphone in remote locations.
@@ -111,10 +111,6 @@ export default function AboutSection({ onOpenContact }) {
                   <strong className="text-white font-mono">{COMPANY_INFO.tradeName}</strong>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-white/5">
-                  <span className="text-gray-400">Legal Entity:</span>
-                  <strong className="text-white font-mono">{COMPANY_INFO.legalName}</strong>
-                </div>
-                <div className="flex justify-between py-1.5 border-b border-white/5">
                   <span className="text-gray-400">Constitution:</span>
                   <strong className="text-white">{COMPANY_INFO.constitution}</strong>
                 </div>
@@ -127,8 +123,8 @@ export default function AboutSection({ onOpenContact }) {
                   <strong className="text-white font-mono">{COMPANY_INFO.registrationDate}</strong>
                 </div>
                 <div className="pt-2">
-                  <span className="text-gray-400 block mb-1">Principal Place of Business:</span>
-                  <p className="text-gray-300 leading-snug">{COMPANY_INFO.registeredAddress.full}</p>
+                  <span className="text-gray-400 block mb-1">Business Address:</span>
+                  <p className="text-gray-300 leading-snug">{COMPANY_INFO.businessAddress.full}</p>
                 </div>
               </div>
 

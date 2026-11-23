@@ -7,7 +7,7 @@ import ProductsShowcase from './components/ProductsShowcase';
 import CostEstimator from './components/CostEstimator';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
-import LegalHub from './components/LegalHub';
+import LegalPolicyPage from './components/LegalPolicyPage';
 import Footer from './components/Footer';
 import PhoneQuickBar from './components/PhoneQuickBar';
 import CookieBanner from './components/CookieBanner';
@@ -15,7 +15,6 @@ import { COMPANY_INFO } from './data/companyData';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
-  const [legalDocKey, setLegalDocKey] = useState('privacy');
   const [estimatorData, setEstimatorData] = useState(null);
 
   // Sync with browser URL hash
@@ -23,8 +22,7 @@ export default function App() {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '').toLowerCase();
       if (['privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer'].includes(hash)) {
-        setActiveTab('legal');
-        setLegalDocKey(hash);
+        setActiveTab(hash);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (['solutions', 'problem-solving', 'products', 'about', 'contact'].includes(hash)) {
         setActiveTab(hash);
@@ -45,10 +43,9 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const openLegalDocument = (docId) => {
-    setLegalDocKey(docId);
-    setActiveTab('legal');
-    window.location.hash = docId;
+  const openLegalDocument = (policyKey) => {
+    setActiveTab(policyKey);
+    window.location.hash = policyKey;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -59,13 +56,15 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Check if current tab is a legal policy page
+  const isLegalPolicyPage = ['privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer'].includes(activeTab);
+
   return (
     <div className="min-h-screen bg-[#0B0B0F] text-[#F7F8FA] flex flex-col font-sans selection:bg-[#6A00FF] selection:text-white">
-      {/* Top Navbar */}
+      {/* Top Navbar (Legal links removed from header) */}
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={navigateTo} 
-        openLegalDoc={openLegalDocument} 
       />
 
       {/* Main Page Content */}
@@ -123,24 +122,26 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'legal' && (
-          <div className="pt-20">
-            <LegalHub 
-              initialTab={legalDocKey} 
-              onContactClick={() => navigateTo('contact')} 
-            />
-          </div>
-        )}
-
         {activeTab === 'contact' && (
           <div className="pt-20">
             <ContactSection prefillData={estimatorData} />
             <AboutSection onOpenContact={() => navigateTo('contact')} />
           </div>
         )}
+
+        {/* Dedicated Standalone Legal & Policy Pages (NO TABS) */}
+        {isLegalPolicyPage && (
+          <div className="pt-20">
+            <LegalPolicyPage 
+              policyId={activeTab} 
+              onBackToHome={() => navigateTo('home')} 
+              onOpenContact={() => navigateTo('contact')} 
+            />
+          </div>
+        )}
       </main>
 
-      {/* Footer */}
+      {/* Footer (Contains all direct Legal & Policy links and Business Address) */}
       <Footer 
         onNavClick={navigateTo} 
         onOpenLegal={openLegalDocument} 

@@ -8,13 +8,11 @@ import {
   X, 
   ArrowRight, 
   ShieldCheck, 
-  FileText, 
-  Sparkles,
   ChevronRight,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, openLegalDoc }) {
+export default function Navbar({ activeTab, setActiveTab }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -38,24 +36,18 @@ export default function Navbar({ activeTab, setActiveTab, openLegalDoc }) {
     };
   }, [mobileMenuOpen]);
 
+  // Header Nav Links without Legal & Policies
   const navLinks = [
     { id: 'home', label: 'Home' },
     { id: 'solutions', label: 'Solutions' },
     { id: 'problem-solving', label: 'Problem Solving' },
     { id: 'products', label: 'Proprietary Tech' },
     { id: 'about', label: 'About Us' },
-    { id: 'legal', label: 'Legal & Policies' },
     { id: 'contact', label: 'Contact' }
   ];
 
   const handleNavClick = (id) => {
     setActiveTab(id);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleOpenLegal = (policyId) => {
-    openLegalDoc(policyId);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -80,7 +72,7 @@ export default function Navbar({ activeTab, setActiveTab, openLegalDoc }) {
               <GrocaveLogo size="md" />
             </button>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation (No Legal Link) */}
             <nav className="hidden lg:flex items-center gap-1 bg-[#12121A]/80 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
               {navLinks.map((link) => (
                 <button
@@ -170,51 +162,6 @@ export default function Navbar({ activeTab, setActiveTab, openLegalDoc }) {
                 <ChevronRight className={`w-4 h-4 ${activeTab === link.id ? 'text-white' : 'text-gray-500'}`} />
               </button>
             ))}
-          </div>
-
-          {/* Legal Quick Links Sub-Menu */}
-          <div className="mt-2 pt-4 border-t border-white/10">
-            <div className="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#6A00FF]" />
-              <span>Legal Policies & Statutory Compliance</span>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button 
-                onClick={() => handleOpenLegal('privacy')}
-                className="text-left text-xs text-gray-300 hover:text-white p-2 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between"
-              >
-                <span>Privacy Policy</span>
-                <ChevronRight className="w-3 h-3 text-gray-500" />
-              </button>
-              <button 
-                onClick={() => handleOpenLegal('terms')}
-                className="text-left text-xs text-gray-300 hover:text-white p-2 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between"
-              >
-                <span>Terms of Service</span>
-                <ChevronRight className="w-3 h-3 text-gray-500" />
-              </button>
-              <button 
-                onClick={() => handleOpenLegal('refund')}
-                className="text-left text-xs text-gray-300 hover:text-white p-2 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between"
-              >
-                <span>Refund Policy</span>
-                <ChevronRight className="w-3 h-3 text-gray-500" />
-              </button>
-              <button 
-                onClick={() => handleOpenLegal('delivery')}
-                className="text-left text-xs text-gray-300 hover:text-white p-2 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between"
-              >
-                <span>Digital Delivery</span>
-                <ChevronRight className="w-3 h-3 text-gray-500" />
-              </button>
-              <button 
-                onClick={() => handleOpenLegal('grievance')}
-                className="text-left text-xs text-gray-300 hover:text-white p-2 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between col-span-2"
-              >
-                <span>Grievance Officer Redressal</span>
-                <ChevronRight className="w-3 h-3 text-gray-500" />
-              </button>
-            </div>
           </div>
 
           {/* Quick Contact Box on Mobile */}

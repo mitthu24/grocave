@@ -9,11 +9,10 @@ Official corporate website for **GROCAVE**, an enterprise software engineering f
 
 ## 🏛️ Statutory Enterprise Profile
 - **Trade Name:** GROCAVE
-- **Legal Entity:** RAMBAHADUR MAHATO
 - **Constitution:** Proprietorship
 - **GSTIN:** `10BHSPM4951N1ZU`
 - **Registration Date:** 29/06/2022
-- **Registered Office:** Dhoi Branch Post Office, BUILDING NATHUNI MAHATO, DHOI Road, DHOI, Darbhanga, Bihar, 846009, India
+- **Business Address:** Dhoi Branch Post Office, BUILDING NATHUNI MAHATO, DHOI Road, DHOI, Darbhanga, Bihar, 846009, India
 - **Hotline Phone:** [+91 73710 05525](tel:7371005525)
 - **Official Email:** [info.grocave@gmail.com](mailto:info.grocave@gmail.com)
 
@@ -22,7 +21,7 @@ Official corporate website for **GROCAVE**, an enterprise software engineering f
 ## 🚀 Key Features & Highlights
 
 - **Phone-First Fluid UX:** Engineered without layout breaks, zero horizontal overflow, thumb-friendly tap targets, and a sticky mobile quick-action bar (Call, WhatsApp, Inquire).
-- **Comprehensive Legal & Compliance Center:**
+- **Dedicated Standalone Legal & Compliance Pages (In Footer):**
   - **Privacy Policy:** Compliant with Indian Digital Personal Data Protection Act (DPDP Act 2023) and IT Act 2000.
   - **Terms & Conditions:** Complete Master Services Agreement, IP transfer, warranty, and Darbhanga, Bihar jurisdiction clauses.
   - **Refund & Cancellation Policy:** Milestone-aligned software delivery, sprint agreements, and SaaS terms.

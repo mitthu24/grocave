@@ -9,7 +9,7 @@ export const LEGAL_POLICIES = {
     content: [
       {
         heading: "1. Introduction & Overview",
-        text: `Welcome to GROCAVE (Trade Name: GROCAVE, Legal Entity: RAMBAHADUR MAHATO, GSTIN: ${COMPANY_INFO.gstin}). We value your trust and are fully committed to protecting your personal data and business confidentiality. This Privacy Policy describes how GROCAVE ("we", "our", or "us") collects, stores, uses, processes, and protects your information when you visit our website, engage with our software development services, or use any of our proprietary problem-solving digital platforms.`
+        text: `Welcome to GROCAVE (Trade Name: GROCAVE, GSTIN: ${COMPANY_INFO.gstin}). We value your trust and are fully committed to protecting your personal data and business confidentiality. This Privacy Policy describes how GROCAVE ("we", "our", or "us") collects, stores, uses, processes, and protects your information when you visit our website, engage with our software development services, or use any of our proprietary problem-solving digital platforms.`
       },
       {
         heading: "2. Statutory Compliance (DPDP Act 2023 & IT Act)",
@@ -76,7 +76,7 @@ export const LEGAL_POLICIES = {
     content: [
       {
         heading: "1. Agreement to Terms",
-        text: `These Terms and Conditions constitute a legally binding agreement between you (whether individually or on behalf of an entity, "Client") and GROCAVE (Proprietorship firm represented by RAMBAHADUR MAHATO, GSTIN: ${COMPANY_INFO.gstin}, with principal office at ${COMPANY_INFO.registeredAddress.full}). By accessing our site, commissioning custom software development, or utilizing our SaaS applications, you acknowledge that you have read, understood, and agreed to be bound by these Terms.`
+        text: `These Terms and Conditions constitute a legally binding agreement between you (whether individually or on behalf of an entity, "Client") and GROCAVE (GSTIN: ${COMPANY_INFO.gstin}, with principal business address at ${COMPANY_INFO.businessAddress.full}). By accessing our site, commissioning custom software development, or utilizing our SaaS applications, you acknowledge that you have read, understood, and agreed to be bound by these Terms.`
       },
       {
         heading: "2. Scope of Services",
@@ -114,7 +114,7 @@ export const LEGAL_POLICIES = {
       },
       {
         heading: "7. Limitation of Liability",
-        text: `To the maximum extent permitted under applicable law, in no event shall GROCAVE or its proprietor RAMBAHADUR MAHATO be liable for any indirect, incidental, consequential, special, or punitive damages (including loss of profits, data corruption, business disruption) arising out of the use or inability to use the software. GROCAVE's maximum aggregate liability shall be capped at the total amount actually paid by the Client to GROCAVE under the specific work order within the three (3) months preceding the claim.`
+        text: `To the maximum extent permitted under applicable law, in no event shall GROCAVE or its management be liable for any indirect, incidental, consequential, special, or punitive damages (including loss of profits, data corruption, business disruption) arising out of the use or inability to use the software. GROCAVE's maximum aggregate liability shall be capped at the total amount actually paid by the Client to GROCAVE under the specific work order within the three (3) months preceding the claim.`
       },
       {
         heading: "8. Governing Law & Dispute Resolution",
@@ -229,18 +229,14 @@ export const LEGAL_POLICIES = {
         text: `In compliance with the Information Technology Act, 2000, Consumer Protection (E-Commerce) Rules, 2020, and GST regulations, the verified statutory details of the business are provided below:`
       },
       {
-        heading: "2. Registered Enterprise Credentials",
+        heading: "2. Enterprise Credentials",
         subsections: [
           {
             title: "Trade Name:",
             detail: COMPANY_INFO.tradeName
           },
           {
-            title: "Legal Entity Name:",
-            detail: COMPANY_INFO.legalName
-          },
-          {
-            title: "Constitution of Business:",
+            title: "Business Constitution:",
             detail: COMPANY_INFO.constitution
           },
           {
@@ -252,19 +248,18 @@ export const LEGAL_POLICIES = {
             detail: COMPANY_INFO.registrationDate
           },
           {
-            title: "Principal Place of Business:",
-            detail: COMPANY_INFO.registeredAddress.full
+            title: "Principal Business Address:",
+            detail: COMPANY_INFO.businessAddress.full
           }
         ]
       },
       {
         heading: "3. Designated Grievance Officer",
         text: `If you have any queries, concerns, technical disputes, or privacy grievances regarding our services, you may reach out directly to our appointed Grievance Officer:
-        • Name of Grievance Officer: ${COMPANY_INFO.compliance.grievanceOfficer}
-        • Designation: Proprietor & Principal Technology Director
+        • Name / Cell: ${COMPANY_INFO.compliance.grievanceOfficer}
         • Direct Telephone / WhatsApp: ${COMPANY_INFO.contact.phoneFormatted} (Call: ${COMPANY_INFO.contact.phone})
         • Official Email: ${COMPANY_INFO.compliance.grievanceEmail}
-        • Postal Communication: ${COMPANY_INFO.registeredAddress.full}`
+        • Postal Communication: ${COMPANY_INFO.businessAddress.full}`
       },
       {
         heading: "4. Grievance Redressal Escalation Matrix",
@@ -283,7 +278,7 @@ export const LEGAL_POLICIES = {
     content: [
       {
         heading: "1. Brand & Trademark Notice",
-        text: `The GROCAVE mark, logo, the stylized "G" swoosh insignia, the phrase "BUILD • GROW • THRIVE", and all related product identifiers (including CoreFlow™, OmniPulse™, CloudShield™) are the exclusive intellectual property of RAMBAHADUR MAHATO (Trade Name: GROCAVE). Any unauthorized reproduction, imitation, or commercial use without prior written consent is strictly prohibited.`
+        text: `The GROCAVE mark, logo, the stylized "G" swoosh insignia, the phrase "BUILD • GROW • THRIVE", and all related product identifiers (including CoreFlow™, OmniPulse™, CloudShield™) are the exclusive intellectual property of GROCAVE. Any unauthorized reproduction, imitation, or commercial use without prior written consent is strictly prohibited.`
       },
       {
         heading: "2. Technical Advice Disclaimer",

@@ -6,12 +6,7 @@ import {
   Mail, 
   MapPin, 
   ShieldCheck, 
-  Heart, 
   ArrowUp, 
-  FileText, 
-  RotateCcw, 
-  Truck, 
-  AlertCircle,
   Building,
   CheckCircle2
 } from 'lucide-react';
@@ -47,7 +42,7 @@ export default function Footer({ onNavClick, onOpenLegal }) {
                 <span>Govt. Registered Enterprise</span>
               </div>
               <div className="text-[11px] text-gray-400">
-                Legal Name: <strong className="text-white">{COMPANY_INFO.legalName}</strong> ({COMPANY_INFO.constitution})
+                Constitution: <strong className="text-white">{COMPANY_INFO.constitution}</strong>
               </div>
               <div className="text-[11px] text-gray-400">
                 GSTIN: <strong className="text-emerald-400 font-mono">{COMPANY_INFO.gstin}</strong>
@@ -102,7 +97,7 @@ export default function Footer({ onNavClick, onOpenLegal }) {
             </ul>
           </div>
 
-          {/* Legal & Policies (Crucial for compliance) */}
+          {/* Legal & Policies (Direct Footer Links to Separate Dedicated Pages) */}
           <div className="lg:col-span-2 space-y-3">
             <div className="text-xs uppercase tracking-wider font-bold text-white flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#6A00FF]" />
@@ -138,7 +133,7 @@ export default function Footer({ onNavClick, onOpenLegal }) {
                   onClick={() => onOpenLegal('delivery')} 
                   className="hover:text-white transition-colors text-left"
                 >
-                  Shipping & Delivery SLA
+                  Shipping & Delivery Policy
                 </button>
               </li>
               <li>
@@ -146,7 +141,7 @@ export default function Footer({ onNavClick, onOpenLegal }) {
                   onClick={() => onOpenLegal('grievance')} 
                   className="hover:text-white transition-colors text-left"
                 >
-                  Grievance Redressal
+                  Contact & Grievance
                 </button>
               </li>
               <li>
@@ -160,14 +155,14 @@ export default function Footer({ onNavClick, onOpenLegal }) {
             </ul>
           </div>
 
-          {/* Registered Office Contact */}
+          {/* Business Address Contact */}
           <div className="lg:col-span-3 space-y-3">
-            <div className="text-xs uppercase tracking-wider font-bold text-white">Registered Office</div>
+            <div className="text-xs uppercase tracking-wider font-bold text-white">Business Address</div>
             <div className="space-y-2.5 text-gray-300">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#a855f7] flex-shrink-0 mt-0.5" />
                 <span className="text-[11px] leading-relaxed">
-                  {COMPANY_INFO.registeredAddress.full}
+                  {COMPANY_INFO.businessAddress.full}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -200,12 +195,12 @@ export default function Footer({ onNavClick, onOpenLegal }) {
         {/* Bottom Copyright & Statutory Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500 text-center sm:text-left">
           <div>
-            © {new Date().getFullYear()} <strong className="text-gray-300">GROCAVE</strong>. All Rights Reserved. Legal Entity: <strong className="text-gray-300">{COMPANY_INFO.legalName}</strong>.
+            © {new Date().getFullYear()} <strong className="text-gray-300">GROCAVE</strong>. All Rights Reserved.
           </div>
           <div className="flex items-center gap-3">
-            <span>GSTIN: {COMPANY_INFO.gstin}</span>
+            <span>GSTIN: <strong className="text-gray-400 font-mono">{COMPANY_INFO.gstin}</strong></span>
             <span>•</span>
-            <span className="text-[#a855f7]">BUILD • GROW • THRIVE</span>
+            <span className="text-[#a855f7] font-semibold">BUILD • GROW • THRIVE</span>
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 // Official Company Details as per Government Registration & Brand Guidelines
 export const COMPANY_INFO = {
   tradeName: "GROCAVE",
-  legalName: "RAMBAHADUR MAHATO",
+  legalName: "GROCAVE",
   constitution: "Proprietorship",
   gstin: "10BHSPM4951N1ZU",
   registrationDate: "29/06/2022",
@@ -17,7 +17,7 @@ export const COMPANY_INFO = {
     whatsapp: "https://wa.me/917371005525?text=Hello%20Grocave%20Team%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.",
   },
 
-  registeredAddress: {
+  businessAddress: {
     line1: "BUILDING NATHUNI MAHATO, DHOI Road",
     line2: "Dhoi Branch Post Office, DHOI",
     city: "Darbhanga",
@@ -28,7 +28,7 @@ export const COMPANY_INFO = {
   },
 
   compliance: {
-    grievanceOfficer: "Rambahadur Mahato",
+    grievanceOfficer: "Grocave Compliance & Grievance Cell",
     grievanceEmail: "info.grocave@gmail.com",
     responseSLA: "Within 24-48 business hours",
     jurisdiction: "Competent courts in Darbhanga, Bihar, India"
