@@ -1,157 +1,133 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import ProblemSolvingMatrix from './components/ProblemSolvingMatrix';
+import Footer from './components/Footer';
+import PhoneQuickBar from './components/PhoneQuickBar';
+import CookieBanner from './components/CookieBanner';
+import ScrollToTop from './components/ScrollToTop';
+
+import HomePage from './pages/HomePage';
+import LegalDirectoryPage from './pages/LegalDirectoryPage';
+import LegalPolicyPage from './components/LegalPolicyPage';
+
 import SolutionsSection from './components/SolutionsSection';
+import ProblemSolvingMatrix from './components/ProblemSolvingMatrix';
 import ProductsShowcase from './components/ProductsShowcase';
 import CostEstimator from './components/CostEstimator';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
-import LegalPolicyPage from './components/LegalPolicyPage';
-import Footer from './components/Footer';
-import PhoneQuickBar from './components/PhoneQuickBar';
-import CookieBanner from './components/CookieBanner';
-import { COMPANY_INFO } from './data/companyData';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
-  const [estimatorData, setEstimatorData] = useState(null);
+  const navigate = useNavigate();
 
-  // Sync with browser URL hash
-  useEffect(() => {
-    const handleHashChange = () => {
+  // Auto-redirect legacy #hash to real /path URLs
+  React.useEffect(() => {
+    if (window.location.hash) {
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (['privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer'].includes(hash)) {
-        setActiveTab(hash);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (['solutions', 'problem-solving', 'products', 'about', 'contact'].includes(hash)) {
-        setActiveTab(hash);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        setActiveTab('home');
+      const validRoutes = [
+        'privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer',
+        'legal', 'solutions', 'problem-solving', 'products', 'about', 'contact'
+      ];
+      if (validRoutes.includes(hash)) {
+        navigate('/' + hash, { replace: true });
       }
-    };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const navigateTo = (tab) => {
-    setActiveTab(tab);
-    window.location.hash = tab === 'home' ? '' : tab;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const openLegalDocument = (policyKey) => {
-    setActiveTab(policyKey);
-    window.location.hash = policyKey;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    }
+  }, [navigate]);
 
   const handleEstimateTransfer = (estimate) => {
-    setEstimatorData(estimate);
-    setActiveTab('contact');
-    window.location.hash = 'contact';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/contact');
   };
-
-  // Check if current tab is a legal policy page
-  const isLegalPolicyPage = ['privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer'].includes(activeTab);
 
   return (
     <div className="min-h-screen bg-[#0B0B0F] text-[#F7F8FA] flex flex-col font-sans selection:bg-[#6A00FF] selection:text-white">
-      {/* Top Navbar (Legal links removed from header) */}
-      <Navbar 
-        activeTab={activeTab} 
-        setActiveTab={navigateTo} 
-      />
+      {/* Scroll to top on every route change */}
+      <ScrollToTop />
 
-      {/* Main Page Content */}
+      {/* Top Navbar */}
+      <Navbar />
+
+      {/* Main Routed Page Content */}
       <main className="flex-grow">
-        {activeTab === 'home' && (
-          <>
-            <Hero 
-              onExploreSolutions={() => navigateTo('solutions')}
-              onOpenContact={() => navigateTo('contact')}
-              onOpenEstimator={() => {
-                const el = document.getElementById('estimator-anchor');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-            />
-            <ProblemSolvingMatrix onOpenContact={() => navigateTo('contact')} />
-            <SolutionsSection onOpenContact={() => navigateTo('contact')} />
-            <ProductsShowcase onOpenContact={() => navigateTo('contact')} />
-            
-            <div id="estimator-anchor">
-              <CostEstimator onSelectEstimate={handleEstimateTransfer} />
-            </div>
-            
-            <AboutSection onOpenContact={() => navigateTo('contact')} />
-            <ContactSection prefillData={estimatorData} />
-          </>
-        )}
+        <Routes>
+          {/* Main Website Pages */}
+          <Route path="/" element={<HomePage />} />
+          
+          <Route 
+            path="/solutions" 
+            element={
+              <div className="pt-20">
+                <SolutionsSection onOpenContact={() => navigate('/contact')} />
+                <ProblemSolvingMatrix onOpenContact={() => navigate('/contact')} />
+                <CostEstimator onSelectEstimate={handleEstimateTransfer} />
+              </div>
+            } 
+          />
+          
+          <Route 
+            path="/problem-solving" 
+            element={
+              <div className="pt-20">
+                <ProblemSolvingMatrix onOpenContact={() => navigate('/contact')} />
+                <SolutionsSection onOpenContact={() => navigate('/contact')} />
+                <ContactSection />
+              </div>
+            } 
+          />
+          
+          <Route 
+            path="/products" 
+            element={
+              <div className="pt-20">
+                <ProductsShowcase onOpenContact={() => navigate('/contact')} />
+                <CostEstimator onSelectEstimate={handleEstimateTransfer} />
+              </div>
+            } 
+          />
+          
+          <Route 
+            path="/about" 
+            element={
+              <div className="pt-20">
+                <AboutSection onOpenContact={() => navigate('/contact')} />
+                <ContactSection />
+              </div>
+            } 
+          />
+          
+          <Route 
+            path="/contact" 
+            element={
+              <div className="pt-20">
+                <ContactSection />
+                <AboutSection onOpenContact={() => navigate('/contact')} />
+              </div>
+            } 
+          />
 
-        {activeTab === 'solutions' && (
-          <div className="pt-20">
-            <SolutionsSection onOpenContact={() => navigateTo('contact')} />
-            <ProblemSolvingMatrix onOpenContact={() => navigateTo('contact')} />
-            <CostEstimator onSelectEstimate={handleEstimateTransfer} />
-          </div>
-        )}
+          {/* Legal Directory Page: /legal */}
+          <Route path="/legal" element={<div className="pt-20"><LegalDirectoryPage /></div>} />
 
-        {activeTab === 'problem-solving' && (
-          <div className="pt-20">
-            <ProblemSolvingMatrix onOpenContact={() => navigateTo('contact')} />
-            <SolutionsSection onOpenContact={() => navigateTo('contact')} />
-            <ContactSection prefillData={estimatorData} />
-          </div>
-        )}
+          {/* SEPARATE DEDICATED LEGAL & POLICY PAGES (REAL CLEAN URLS, NO HASH, NO TABS) */}
+          <Route path="/privacy" element={<div className="pt-20"><LegalPolicyPage policyId="privacy" /></div>} />
+          <Route path="/terms" element={<div className="pt-20"><LegalPolicyPage policyId="terms" /></div>} />
+          <Route path="/refund" element={<div className="pt-20"><LegalPolicyPage policyId="refund" /></div>} />
+          <Route path="/delivery" element={<div className="pt-20"><LegalPolicyPage policyId="delivery" /></div>} />
+          <Route path="/grievance" element={<div className="pt-20"><LegalPolicyPage policyId="grievance" /></div>} />
+          <Route path="/disclaimer" element={<div className="pt-20"><LegalPolicyPage policyId="disclaimer" /></div>} />
 
-        {activeTab === 'products' && (
-          <div className="pt-20">
-            <ProductsShowcase onOpenContact={() => navigateTo('contact')} />
-            <CostEstimator onSelectEstimate={handleEstimateTransfer} />
-          </div>
-        )}
-
-        {activeTab === 'about' && (
-          <div className="pt-20">
-            <AboutSection onOpenContact={() => navigateTo('contact')} />
-            <ContactSection prefillData={estimatorData} />
-          </div>
-        )}
-
-        {activeTab === 'contact' && (
-          <div className="pt-20">
-            <ContactSection prefillData={estimatorData} />
-            <AboutSection onOpenContact={() => navigateTo('contact')} />
-          </div>
-        )}
-
-        {/* Dedicated Standalone Legal & Policy Pages (NO TABS) */}
-        {isLegalPolicyPage && (
-          <div className="pt-20">
-            <LegalPolicyPage 
-              policyId={activeTab} 
-              onBackToHome={() => navigateTo('home')} 
-              onOpenContact={() => navigateTo('contact')} 
-            />
-          </div>
-        )}
+          {/* Fallback to Home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
-      {/* Footer (Contains all direct Legal & Policy links and Business Address) */}
-      <Footer 
-        onNavClick={navigateTo} 
-        onOpenLegal={openLegalDocument} 
-      />
+      {/* Footer with direct links to all legal pages */}
+      <Footer />
 
       {/* Floating Action Bar for Mobile Phones */}
-      <PhoneQuickBar onOpenContact={() => navigateTo('contact')} />
+      <PhoneQuickBar />
 
-      {/* Statutory Cookie & DPDP Consent Banner */}
-      <CookieBanner onOpenPrivacy={() => openLegalDocument('privacy')} />
+      {/* Statutory Cookie Consent Banner */}
+      <CookieBanner />
     </div>
   );
 }

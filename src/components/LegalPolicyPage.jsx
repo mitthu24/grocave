@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { LEGAL_POLICIES } from '../data/legalPolicies';
 import { COMPANY_INFO } from '../data/companyData';
 import { 
@@ -16,7 +17,7 @@ import {
   FileText
 } from 'lucide-react';
 
-export default function LegalPolicyPage({ policyId, onBackToHome, onOpenContact }) {
+export default function LegalPolicyPage({ policyId }) {
   const [copied, setCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -50,18 +51,18 @@ export default function LegalPolicyPage({ policyId, onBackToHome, onOpenContact 
         
         {/* Navigation Breadcrumb & Back Button */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
-          <button
-            onClick={onBackToHome}
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white transition-colors group w-fit"
           >
             <ArrowLeft className="w-4 h-4 text-[#6A00FF] group-hover:-translate-x-1 transition-transform" />
             <span>Back to Home</span>
-          </button>
+          </Link>
 
           <div className="flex items-center gap-2 text-xs text-gray-400">
-            <span className="hover:text-white cursor-pointer" onClick={onBackToHome}>Home</span>
+            <Link to="/" className="hover:text-white">Home</Link>
             <span>/</span>
-            <span className="text-gray-500">Legal</span>
+            <Link to="/legal" className="hover:text-white text-gray-400">Legal</Link>
             <span>/</span>
             <span className="text-[#a855f7] font-semibold">{doc.title}</span>
           </div>
@@ -211,13 +212,13 @@ export default function LegalPolicyPage({ policyId, onBackToHome, onOpenContact 
                 Official Grievance Cell: {COMPANY_INFO.compliance.grievanceEmail} • Response SLA within 24-48 hours.
               </div>
             </div>
-            <button
-              onClick={onOpenContact}
+            <Link
+              to="/contact"
               className="px-4 py-2.5 rounded-lg bg-[#6A00FF] hover:bg-[#5800d4] text-white text-xs font-bold shadow-md shadow-[#6A00FF]/30 transition-all flex items-center justify-center gap-2 flex-shrink-0"
             >
               <span>Contact Us</span>
               <ChevronRight className="w-3.5 h-3.5" />
-            </button>
+            </Link>
           </div>
 
         </div>

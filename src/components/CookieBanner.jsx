@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ShieldCheck } from 'lucide-react';
 
-export default function CookieBanner({ onOpenPrivacy }) {
+export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -49,12 +50,13 @@ export default function CookieBanner({ onOpenPrivacy }) {
               >
                 Essential Only
               </button>
-              <button
-                onClick={onOpenPrivacy}
+              <Link
+                to="/privacy"
+                onClick={() => setVisible(false)}
                 className="text-[11px] text-[#b992ff] hover:underline ml-auto"
               >
                 Read Policy
-              </button>
+              </Link>
             </div>
           </div>
         </div>

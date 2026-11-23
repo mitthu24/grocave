@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import GrocaveLogo from './GrocaveLogo';
 import { COMPANY_INFO } from '../data/companyData';
 import { 
@@ -7,14 +8,13 @@ import {
   Menu, 
   X, 
   ArrowRight, 
-  ShieldCheck, 
-  ChevronRight,
-  Sparkles
+  ChevronRight 
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab }) {
+export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,21 +36,15 @@ export default function Navbar({ activeTab, setActiveTab }) {
     };
   }, [mobileMenuOpen]);
 
-  // Header Nav Links without Legal & Policies
+  // Clean nav links without legal & policies
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'solutions', label: 'Solutions' },
-    { id: 'problem-solving', label: 'Problem Solving' },
-    { id: 'products', label: 'Proprietary Tech' },
-    { id: 'about', label: 'About Us' },
-    { id: 'contact', label: 'Contact' }
+    { path: '/', label: 'Home' },
+    { path: '/solutions', label: 'Solutions' },
+    { path: '/problem-solving', label: 'Problem Solving' },
+    { path: '/products', label: 'Proprietary Tech' },
+    { path: '/about', label: 'About Us' },
+    { path: '/contact', label: 'Contact' }
   ];
-
-  const handleNavClick = (id) => {
-    setActiveTab(id);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <>
@@ -64,29 +58,33 @@ export default function Navbar({ activeTab, setActiveTab }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <button 
-              onClick={() => handleNavClick('home')}
+            <Link 
+              to="/"
               className="text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6A00FF] rounded-lg"
               aria-label="Grocave Home"
+              onClick={() => setMobileMenuOpen(false)}
             >
               <GrocaveLogo size="md" />
-            </button>
+            </Link>
 
-            {/* Desktop Navigation (No Legal Link) */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1 bg-[#12121A]/80 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
-                    activeTab === link.id
-                      ? 'bg-[#6A00FF] text-white shadow-md shadow-[#6A00FF]/30'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
+                      isActive
+                        ? 'bg-[#6A00FF] text-white shadow-md shadow-[#6A00FF]/30'
+                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Header Right Actions */}
@@ -101,13 +99,13 @@ export default function Navbar({ activeTab, setActiveTab }) {
                 <span className="md:hidden">Call</span>
               </a>
 
-              <button
-                onClick={() => handleNavClick('contact')}
+              <Link
+                to="/contact"
                 className="flex items-center gap-2 text-xs font-bold text-white bg-gradient-to-r from-[#6A00FF] to-[#8B3DFF] hover:from-[#5C00E6] hover:to-[#7A2CE6] px-4 py-2.5 rounded-lg shadow-md shadow-[#6A00FF]/25 hover:shadow-lg hover:shadow-[#6A00FF]/40 transition-all duration-200"
               >
                 <span>Get Discovery Audit</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Hamburger Button */}
@@ -148,20 +146,24 @@ export default function Navbar({ activeTab, setActiveTab }) {
 
           {/* Primary Nav Links */}
           <div className="flex flex-col gap-1 py-4">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`flex items-center justify-between w-full px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
-                  activeTab === link.id
-                    ? 'bg-[#6A00FF] text-white shadow-md shadow-[#6A00FF]/30'
-                    : 'text-gray-200 hover:bg-white/5 active:bg-white/10'
-                }`}
-              >
-                <span>{link.label}</span>
-                <ChevronRight className={`w-4 h-4 ${activeTab === link.id ? 'text-white' : 'text-gray-500'}`} />
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between w-full px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                    isActive
+                      ? 'bg-[#6A00FF] text-white shadow-md shadow-[#6A00FF]/30'
+                      : 'text-gray-200 hover:bg-white/5 active:bg-white/10'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <ChevronRight className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                </Link>
+              );
+            })}
           </div>
 
           {/* Quick Contact Box on Mobile */}
@@ -182,13 +184,14 @@ export default function Navbar({ activeTab, setActiveTab }) {
               <span>{COMPANY_INFO.contact.email}</span>
             </a>
 
-            <button
-              onClick={() => handleNavClick('contact')}
+            <Link
+              to="/contact"
+              onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-[#6A00FF] to-[#8B3DFF] text-white font-bold text-sm shadow-lg shadow-[#6A00FF]/40 active:scale-[0.99]"
             >
               <span>Schedule Architecture Audit</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       )}

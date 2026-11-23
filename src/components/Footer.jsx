@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GrocaveLogo from './GrocaveLogo';
 import { COMPANY_INFO } from '../data/companyData';
 import { 
@@ -6,12 +7,10 @@ import {
   Mail, 
   MapPin, 
   ShieldCheck, 
-  ArrowUp, 
-  Building,
-  CheckCircle2
+  ArrowUp
 } from 'lucide-react';
 
-export default function Footer({ onNavClick, onOpenLegal }) {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -25,12 +24,13 @@ export default function Footer({ onNavClick, onOpenLegal }) {
           
           {/* Brand & Mission Column */}
           <div className="lg:col-span-5 space-y-4">
-            <button 
-              onClick={() => { onNavClick('home'); scrollToTop(); }}
-              className="text-left focus:outline-none"
+            <Link 
+              to="/"
+              className="text-left focus:outline-none inline-block"
+              onClick={scrollToTop}
             >
               <GrocaveLogo size="md" />
-            </button>
+            </Link>
             
             <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-md">
               {COMPANY_INFO.subTagline} We engineer custom business and problem-solving software, cloud SaaS platforms, and enterprise automated workflows designed for stability and scale.
@@ -55,102 +55,71 @@ export default function Footer({ onNavClick, onOpenLegal }) {
             <div className="text-xs uppercase tracking-wider font-bold text-white">Solutions</div>
             <ul className="space-y-2">
               <li>
-                <button 
-                  onClick={() => onNavClick('solutions')} 
-                  className="hover:text-white transition-colors"
-                >
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Custom Software
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onNavClick('solutions')} 
-                  className="hover:text-white transition-colors"
-                >
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Cloud SaaS Platforms
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onNavClick('solutions')} 
-                  className="hover:text-white transition-colors"
-                >
-                  ERP & Inventory Sync
-                </button>
+                <Link to="/problem-solving" className="hover:text-white transition-colors">
+                  Problem Solving Matrix
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onNavClick('solutions')} 
-                  className="hover:text-white transition-colors"
-                >
-                  AI Process Automation
-                </button>
+                <Link to="/products" className="hover:text-white transition-colors">
+                  Proprietary Tech
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onNavClick('solutions')} 
-                  className="hover:text-white transition-colors"
-                >
-                  Mobile & Web Systems
-                </button>
+                <Link to="/about" className="hover:text-white transition-colors">
+                  About Us
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Legal & Policies (Direct Footer Links to Separate Dedicated Pages) */}
+          {/* Legal & Policies (Real Clean Path URLs) */}
           <div className="lg:col-span-2 space-y-3">
             <div className="text-xs uppercase tracking-wider font-bold text-white flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#6A00FF]" />
-              <span>Legal & Policies</span>
+              <Link to="/legal" className="hover:text-[#a855f7] transition-colors">
+                Legal & Policies
+              </Link>
             </div>
             <ul className="space-y-2">
               <li>
-                <button 
-                  onClick={() => onOpenLegal('privacy')} 
-                  className="hover:text-white transition-colors text-left"
-                >
+                <Link to="/privacy" className="hover:text-white transition-colors text-left block">
                   Privacy Policy
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onOpenLegal('terms')} 
-                  className="hover:text-white transition-colors text-left"
-                >
+                <Link to="/terms" className="hover:text-white transition-colors text-left block">
                   Terms & Conditions
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onOpenLegal('refund')} 
-                  className="hover:text-white transition-colors text-left"
-                >
+                <Link to="/refund" className="hover:text-white transition-colors text-left block">
                   Refund & Cancellation
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onOpenLegal('delivery')} 
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Shipping & Delivery Policy
-                </button>
+                <Link to="/delivery" className="hover:text-white transition-colors text-left block">
+                  Shipping & Delivery
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onOpenLegal('grievance')} 
-                  className="hover:text-white transition-colors text-left"
-                >
+                <Link to="/grievance" className="hover:text-white transition-colors text-left block">
                   Contact & Grievance
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => onOpenLegal('disclaimer')} 
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Disclaimer & IP Notice
-                </button>
+                <Link to="/disclaimer" className="hover:text-white transition-colors text-left block">
+                  Disclaimer & IP
+                </Link>
               </li>
             </ul>
           </div>
