@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#190a36"/>
+      <stop offset="100%" stop-color="#08080c"/>
+    </linearGradient>
+    <linearGradient id="purpleSwoosh" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#8019ff"/>
+      <stop offset="100%" stop-color="#5500d4"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- App Icon Rounded Container -->
+  <rect width="200" height="200" rx="46" fill="url(#bgGrad)"/>
+  <rect x="1" y="1" width="198" height="198" rx="45" stroke="#6A00FF" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- Stylized "G" Shape in crisp white -->
+  <!-- Outer C-arc with inner crossbar -->
+  <g transform="translate(20, 20)">
+    <!-- Base G letterform -->
+    <path d="M 124 55
+             C 114 40, 96 32, 78 32
+             C 44 32, 22 56, 22 88
+             C 22 120, 45 144, 80 144
+             C 105 144, 126 130, 134 110
+             L 134 85
+             L 82 85
+             L 82 105
+             L 112 105
+             C 108 118, 96 124, 80 124
+             C 56 124, 42 106, 42 88
+             C 42 68, 56 52, 78 52
+             C 90 52, 102 58, 110 68
+             Z" 
+          fill="#FFFFFF" />
+
+    <!-- Vibrant Purple Dynamic Arc Swoosh crossing through the G -->
+    <path d="M 10 118
+             C 18 100, 36 68, 86 52
+             C 118 42, 148 48, 160 52
+             C 134 58, 104 68, 76 86
+             C 50 102, 36 120, 30 132
+             C 22 130, 14 125, 10 118
+             Z" 
+          fill="url(#purpleSwoosh)"
+          filter="url(#glow)" />
+  </g>
+</svg>

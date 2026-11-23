@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #0B0B0F;
+    color: #F7F8FA;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom glowing effects */
+.glow-purple {
+  box-shadow: 0 0 40px -10px rgba(106, 0, 255, 0.45);
+}
+
+.glow-purple-sm {
+  box-shadow: 0 0 20px -5px rgba(106, 0, 255, 0.35);
+}
+
+.glow-purple-lg {
+  box-shadow: 0 0 80px -15px rgba(106, 0, 255, 0.55);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 20%, #d8b4fe 60%, #9035ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #9d4edd 0%, #6a00ff 50%, #c77dff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-glass {
+  background: rgba(17, 17, 24, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bg-glass-card {
+  background: linear-gradient(180deg, rgba(22, 22, 34, 0.8) 0%, rgba(15, 15, 23, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.bg-glass-card:hover {
+  border-color: rgba(106, 0, 255, 0.35);
+}
+
+/* Subtle grid background */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-dots-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(106, 0, 255, 0.18) 1.5px, transparent 1.5px);
+}
+
+/* Mobile Friendly Touch Scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0F;
+}
+::-webkit-scrollbar-thumb {
+  background: #252438;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6A00FF;
+}
