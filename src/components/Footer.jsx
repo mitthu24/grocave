@@ -97,6 +97,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/data-deletion" className="hover:text-[#a855f7] font-medium transition-colors text-left block flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>User Data Deletion</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/terms" className="hover:text-white transition-colors text-left block">
                   Terms & Conditions
                 </Link>

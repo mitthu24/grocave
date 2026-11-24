@@ -13,7 +13,8 @@ import {
   MapPin, 
   Phone, 
   Mail,
-  ArrowLeft
+  ArrowLeft,
+  Trash2
 } from 'lucide-react';
 
 export default function LegalDirectoryPage() {
@@ -26,6 +27,15 @@ export default function LegalDirectoryPage() {
       icon: ShieldCheck,
       color: "text-purple-400",
       bg: "bg-purple-500/10"
+    },
+    {
+      path: "/data-deletion",
+      title: "User Data Deletion Instructions",
+      badge: "Meta & WhatsApp Cloud API",
+      desc: "Official instructions, in-chat WhatsApp commands, retention policies, and self-service deletion request portal required by Meta Platform Terms & Indian DPDP Act 2023.",
+      icon: Trash2,
+      color: "text-rose-400",
+      bg: "bg-rose-500/10"
     },
     {
       path: "/terms",

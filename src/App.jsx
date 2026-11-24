@@ -26,10 +26,15 @@ export default function App() {
       const hash = window.location.hash.replace('#', '').toLowerCase();
       const validRoutes = [
         'privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer',
+        'data-deletion', 'user-data-deletion',
         'legal', 'solutions', 'problem-solving', 'products', 'about', 'contact'
       ];
       if (validRoutes.includes(hash)) {
-        navigate('/' + hash, { replace: true });
+        if (hash === 'user-data-deletion') {
+          navigate('/data-deletion', { replace: true });
+        } else {
+          navigate('/' + hash, { replace: true });
+        }
       }
     }
   }, [navigate]);
@@ -109,6 +114,8 @@ export default function App() {
 
           {/* SEPARATE DEDICATED LEGAL & POLICY PAGES (REAL CLEAN URLS, NO HASH, NO TABS) */}
           <Route path="/privacy" element={<div className="pt-20"><LegalPolicyPage policyId="privacy" /></div>} />
+          <Route path="/data-deletion" element={<div className="pt-20"><LegalPolicyPage policyId="data-deletion" /></div>} />
+          <Route path="/user-data-deletion" element={<Navigate to="/data-deletion" replace />} />
           <Route path="/terms" element={<div className="pt-20"><LegalPolicyPage policyId="terms" /></div>} />
           <Route path="/refund" element={<div className="pt-20"><LegalPolicyPage policyId="refund" /></div>} />
           <Route path="/delivery" element={<div className="pt-20"><LegalPolicyPage policyId="delivery" /></div>} />

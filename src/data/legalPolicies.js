@@ -289,5 +289,79 @@ export const LEGAL_POLICIES = {
         text: `All third-party trademarks, logos, and brand names mentioned on this website (such as AWS, React, Python, Docker, Razorpay, Stripe, WhatsApp) are the property of their respective owners. Their mention here is purely for descriptive purposes to indicate technical compatibility and integration capabilities.`
       }
     ]
+  },
+
+  "data-deletion": {
+    id: "data-deletion",
+    title: "User Data Deletion Instructions & Policy",
+    subtitle: "Compliance with Meta Platform Terms, WhatsApp Cloud API & Indian DPDP Act 2023",
+    lastUpdated: "November 2024",
+    content: [
+      {
+        heading: "1. Overview & Meta Compliance Statement",
+        text: `In accordance with Meta Platform Terms, WhatsApp Business Solution Provider policies, and the Digital Personal Data Protection Act, 2023 (DPDP Act) of India, GROCAVE provides this User Data Deletion Instructions URL to give users full transparency and total control over their personal data. If you have interacted with GROCAVE through our WhatsApp Business Platform, WhatsApp Cloud API integrations, chatbots, customer support channels, or Facebook/Meta Apps, you have the fundamental right to request the permanent deletion of your data.`
+      },
+      {
+        heading: "2. Categories of Data Collected via Meta & WhatsApp Integrations",
+        subsections: [
+          {
+            title: "WhatsApp User Identifiers:",
+            detail: `Your WhatsApp telephone number, WhatsApp Display Name, profile identifiers, and unique WhatsApp user IDs assigned by Meta.`
+          },
+          {
+            title: "Interaction & Conversation History:",
+            detail: `Message payloads, inbound customer inquiries, order assistance queries, automated chatbot session states, and timestamps of interaction.`
+          },
+          {
+            title: "Media & Attachments:",
+            detail: `Any customer-submitted attachments (images, PDF invoices, support screenshots) voluntarily submitted via WhatsApp chat.`
+          },
+          {
+            title: "Delivery Telemetry:",
+            detail: `Webhook status metadata (message sent, delivered, read status timestamps) utilized strictly for message delivery verification.`
+          }
+        ]
+      },
+      {
+        heading: "3. Step-by-Step Instructions to Request Data Deletion",
+        subsections: [
+          {
+            title: "Method A: In-Chat Automated Command (Instant)",
+            detail: `Open your active WhatsApp chat with GROCAVE (+91 73710 05525) and send the exact command: "DELETE MY DATA" or "REVOKE CONSENT". Our automated webhook will log your opt-out and queue your telephone number for immediate data purge.`
+          },
+          {
+            title: "Method B: Formal Email Request",
+            detail: `Send an email from your registered email address to ${COMPANY_INFO.contact.email} with the subject line "Meta / WhatsApp User Data Deletion Request". Please include: (1) Your WhatsApp Phone Number with Country Code (+91 ...), (2) Your Full Name, and (3) Brief description of the request.`
+          },
+          {
+            title: "Method C: Meta Account Settings Removal",
+            detail: `If you authorized a GROCAVE Meta application via Facebook: Navigate to Facebook Profile > Settings & Privacy > Settings > Apps and Websites > Locate the GROCAVE application > Click "Remove" and check the box to request deletion of all historical user activity data.`
+          },
+          {
+            title: "Method D: Online Self-Service Deletion Form",
+            detail: `You may also use the interactive Data Deletion Request tool below on this page to submit your phone number and obtain an immediate confirmation tracking ID.`
+          }
+        ]
+      },
+      {
+        heading: "4. Deletion Processing Timelines & Verification",
+        text: `• Initial Acknowledgement: Received immediately (in-chat / online form) or within 24 hours (email).
+        • Data Purge Completion: Within 24 to 48 business hours, all conversational records, message history, profile identifiers, and webhook logs linked to your phone number will be permanently deleted from our active production databases, Redis caches, and cloud storage buckets.
+        • Confirmation Code: Upon submission, you will receive a Confirmation Tracking Code (e.g. DEL-XXXXXXXX) allowing you to verify deletion status with our support desk at any time.
+        • Statutory Audit Exception: Anonymized financial accounting or GST records required under Indian taxation laws (e.g. issued tax invoices) may be retained strictly for the statutory limitation period without being utilized for marketing or messaging.`
+      },
+      {
+        heading: "5. Third-Party & Meta Platform Data Handling",
+        text: `GROCAVE does not sell, share, or monetize WhatsApp conversation data with any third-party data broker. When a data deletion request is fulfilled, GROCAVE also sends the appropriate API revocation signal to Meta's Graph API endpoints to dereference any active user tokens.`
+      },
+      {
+        heading: "6. Dedicated Privacy & Grievance Contact",
+        text: `For any technical inquiries or assistance regarding your data deletion request:
+        • Contact Cell: ${COMPANY_INFO.compliance.grievanceOfficer}
+        • Email: ${COMPANY_INFO.compliance.grievanceEmail}
+        • Telephone / WhatsApp: ${COMPANY_INFO.contact.phoneFormatted} (Call: ${COMPANY_INFO.contact.phone})
+        • Business Address: ${COMPANY_INFO.businessAddress.full}`
+      }
+    ]
   }
 };

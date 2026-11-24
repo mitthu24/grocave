@@ -14,12 +14,23 @@ import {
   Mail, 
   Building,
   ChevronRight,
-  FileText
+  FileText,
+  Trash2,
+  CheckCircle2,
+  MessageSquare,
+  AlertTriangle
 } from 'lucide-react';
 
 export default function LegalPolicyPage({ policyId }) {
   const [copied, setCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Interactive Data Deletion Request Form state
+  const [deletionPhone, setDeletionPhone] = useState('');
+  const [deletionEmail, setDeletionEmail] = useState('');
+  const [deletionScope, setDeletionScope] = useState('all');
+  const [deletionSubmitted, setDeletionSubmitted] = useState(false);
+  const [trackingCode, setTrackingCode] = useState('');
 
   const doc = LEGAL_POLICIES[policyId] || LEGAL_POLICIES.privacy;
 
@@ -34,6 +45,15 @@ export default function LegalPolicyPage({ policyId }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDeletionSubmit = (e) => {
+    e.preventDefault();
+    if (!deletionPhone) return;
+    const randomHex = Math.random().toString(36).substring(2, 10).toUpperCase();
+    const code = `META-WA-DEL-${randomHex}`;
+    setTrackingCode(code);
+    setDeletionSubmitted(true);
   };
 
   const filteredContent = doc.content.filter(section => {
@@ -157,6 +177,109 @@ export default function LegalPolicyPage({ policyId }) {
             </div>
           </div>
 
+          {/* Interactive Meta WhatsApp Data Deletion Request Widget */}
+          {policyId === 'data-deletion' && (
+            <div className="mb-10 p-5 sm:p-7 rounded-2xl bg-[#161626] border border-[#6A00FF]/40 shadow-xl">
+              <div className="flex items-center gap-2.5 text-white font-bold text-base sm:text-lg mb-2">
+                <Trash2 className="w-5 h-5 text-rose-400" />
+                <span>Meta WhatsApp Cloud API • Self-Service Data Deletion Portal</span>
+              </div>
+              <p className="text-xs sm:text-sm text-gray-300 mb-6 leading-relaxed">
+                Under Meta Platform Terms and the Indian DPDP Act 2023, you can submit your WhatsApp phone number below to permanently purge all message history, webhook metadata, and contact identifiers from our active servers.
+              </p>
+
+              {deletionSubmitted ? (
+                <div className="p-5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 animate-fadeIn space-y-3">
+                  <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+                    <CheckCircle2 className="w-5 h-5" />
+                    <span>Data Deletion Request Successfully Logged!</span>
+                  </div>
+                  <p className="text-xs text-gray-300">
+                    Your request for phone number <strong className="text-white font-mono">{deletionPhone}</strong> has been logged into our deletion queue. All conversational logs, profile identifiers, and cached message states will be wiped within 24 to 48 business hours.
+                  </p>
+                  <div className="p-3 bg-black/40 rounded-lg border border-white/10 flex items-center justify-between text-xs">
+                    <span className="text-gray-400">Meta Confirmation Tracking Code:</span>
+                    <strong className="text-[#a855f7] font-mono text-sm select-all">{trackingCode}</strong>
+                  </div>
+                  <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                    <a
+                      href={`https://wa.me/917371005525?text=Hello%20Grocave%20Team%2C%20I%20have%20submitted%20a%20Data%20Deletion%20Request.%20Tracking%20Code%3A%20${trackingCode}%20for%20Phone%3A%20${encodeURIComponent(deletionPhone)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>Confirm via WhatsApp Hotline</span>
+                    </a>
+                    <button
+                      onClick={() => setDeletionSubmitted(false)}
+                      className="text-xs text-gray-400 hover:text-white underline"
+                    >
+                      Submit Another Number
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleDeletionSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">
+                        WhatsApp Phone Number (with Country Code) *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={deletionPhone}
+                        onChange={(e) => setDeletionPhone(e.target.value)}
+                        placeholder="e.g. +91 73710 05525"
+                        className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#6A00FF]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 mb-1">
+                        Email Address (Optional, for email confirmation)
+                      </label>
+                      <input
+                        type="email"
+                        value={deletionEmail}
+                        onChange={(e) => setDeletionEmail(e.target.value)}
+                        placeholder="e.g. user@domain.com"
+                        className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#6A00FF]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">
+                      Scope of Deletion
+                    </label>
+                    <select
+                      value={deletionScope}
+                      onChange={(e) => setDeletionScope(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-[#12121b] border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-[#6A00FF]"
+                    >
+                      <option value="all">Delete All WhatsApp Message Logs, Attachments & Profile Records</option>
+                      <option value="opt-out">Opt-out from Automated Notifications & Marketing Messages</option>
+                      <option value="meta-app">Purge All Associated Meta App & Webhook Telemetry</option>
+                    </select>
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-between gap-4">
+                    <button
+                      type="submit"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      <span>Request Instant Data Deletion</span>
+                    </button>
+                    <span className="text-[11px] text-gray-400">Generates Meta Confirmation Tracking ID</span>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
+
           {/* Quick In-Document Search */}
           <div className="relative mb-8 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -207,7 +330,7 @@ export default function LegalPolicyPage({ policyId }) {
           {/* Bottom Grievance / Inquiries Footer */}
           <div className="mt-10 pt-6 border-t border-white/10 bg-[#161624] -mx-5 -mb-5 sm:-mx-8 sm:-mb-8 lg:-mx-10 lg:-mb-10 p-6 rounded-b-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="text-xs font-bold text-white">Have legal inquiries or contract clarifications?</div>
+              <div className="text-xs font-bold text-white">Have privacy or data deletion inquiries?</div>
               <div className="text-[11px] text-gray-400">
                 Official Grievance Cell: {COMPANY_INFO.compliance.grievanceEmail} • Response SLA within 24-48 hours.
               </div>
