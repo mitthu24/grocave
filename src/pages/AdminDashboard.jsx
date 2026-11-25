@@ -82,9 +82,9 @@ export default function AdminDashboard() {
     name: '',
     email: '',
     password: '',
-    role: 'manager',
+    roleName: 'Lead Operations Manager',
     title: 'Lead Operations Executive',
-    permissions: ['manage_leads']
+    permissions: ['manage_leads', 'create_leads', 'export_leads']
   });
 
   const [resetTargetUser, setResetTargetUser] = useState(null);
@@ -205,19 +205,27 @@ export default function AdminDashboard() {
 
   const handleCreateTeamMember = (e) => {
     e.preventDefault();
-    const res = addTeamMember(newTeamForm);
+    const res = addTeamMember({
+      name: newTeamForm.name,
+      email: newTeamForm.email,
+      password: newTeamForm.password,
+      role: 'custom',
+      roleName: newTeamForm.roleName || 'Custom Role',
+      title: newTeamForm.title || 'Operations Specialist',
+      permissions: newTeamForm.permissions
+    });
     if (res.success) {
       setShowAddTeamModal(false);
       setNewTeamForm({
         name: '',
         email: '',
         password: '',
-        role: 'manager',
+        roleName: 'Lead Operations Manager',
         title: 'Lead Operations Executive',
-        permissions: ['manage_leads']
+        permissions: ['manage_leads', 'create_leads', 'export_leads']
       });
       loadData();
-      alert(`Team member ${res.user.name} created successfully!`);
+      alert(`Team member ${res.user.name} created successfully with role "${res.user.roleName}"!`);
     } else {
       alert(res.error || 'Failed to add team member');
     }
@@ -863,11 +871,15 @@ export default function AdminDashboard() {
                           {member.name.charAt(0)}
                         </div>
                         <div>
-                          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                          <h3 className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
                             <span>{member.name}</span>
-                            {member.role === 'superadmin' && (
-                              <span className="px-2 py-0.2 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                            {member.role === 'superadmin' ? (
+                              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold uppercase">
                                 SUPERADMIN
+                              </span>
+                            ) : (
+                              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#6A00FF]/20 text-[#b992ff] border border-[#6A00FF]/30 font-bold uppercase">
+                                {member.roleName || 'Custom Role'}
                               </span>
                             )}
                           </h3>
@@ -879,7 +891,7 @@ export default function AdminDashboard() {
 
                     {/* Permissions list */}
                     <div className="mt-3 pt-3 border-t border-white/5">
-                      <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1.5">Assigned Permissions:</span>
+                      <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1.5">Custom Access Permissions:</span>
                       <div className="flex flex-wrap gap-1.5">
                         {member.permissions.map((perm, pIdx) => (
                           <span key={pIdx} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-gray-300 font-mono">
@@ -892,15 +904,22 @@ export default function AdminDashboard() {
 
                   {/* Actions for this user */}
                   <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between">
-                    <button
-                      onClick={() => setResetTargetUser(member)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-semibold text-gray-300 hover:text-white transition-colors"
-                    >
-                      <KeyRound className="w-3.5 h-3.5 text-[#a855f7]" />
-                      <span>Reset Password</span>
-                    </button>
+                    {!member.isPrimarySuperadmin && member.role !== 'superadmin' && member.id !== currentUser.id ? (
+                      <button
+                        onClick={() => setResetTargetUser(member)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-semibold text-gray-300 hover:text-white transition-colors"
+                      >
+                        <KeyRound className="w-3.5 h-3.5 text-[#a855f7]" />
+                        <span>Reset User Password</span>
+                      </button>
+                    ) : (
+                      <span className="text-[11px] text-gray-500 italic flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Superadmin (Change via Security Tab)</span>
+                      </span>
+                    )}
 
-                    {!member.isPrimarySuperadmin && member.id !== currentUser.id && (
+                    {!member.isPrimarySuperadmin && member.role !== 'superadmin' && member.id !== currentUser.id && (
                       <button
                         onClick={() => handleDeleteTeamMember(member.id, member.name)}
                         className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 transition-colors"
@@ -1334,37 +1353,54 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">Role Type</label>
-                  <select
-                    value={newTeamForm.role}
-                    onChange={(e) => setNewTeamForm({ ...newTeamForm, role: e.target.value })}
-                    className="w-full px-3.5 py-2 bg-[#12121b] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-[#6A00FF]"
-                  >
-                    <option value="manager">Lead Operations Manager</option>
-                    <option value="editor">Content & Project Editor</option>
-                    <option value="support">Customer Support Lead</option>
-                  </select>
+              {/* Custom Role Definition */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-semibold text-gray-300">
+                    Custom Role Name *
+                  </label>
+                  <span className="text-[10px] text-[#a855f7] font-semibold">Customizable</span>
                 </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">Designation Title</label>
-                  <input
-                    type="text"
-                    value={newTeamForm.title}
-                    onChange={(e) => setNewTeamForm({ ...newTeamForm, title: e.target.value })}
-                    placeholder="e.g. Senior Lead Executive"
-                    className="w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-[#6A00FF]"
-                  />
+                <input
+                  type="text"
+                  required
+                  value={newTeamForm.roleName}
+                  onChange={(e) => setNewTeamForm({ ...newTeamForm, roleName: e.target.value })}
+                  placeholder="e.g. Lead Operations Manager, Sales Executive, Support Lead..."
+                  className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-[#6A00FF] mb-2"
+                />
+                
+                {/* Quick preset chips */}
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {['Lead Operations Manager', 'Sales & Inquiries Head', 'Technical Support Specialist', 'Project Analyst'].map((preset) => (
+                    <button
+                      key={preset}
+                      type="button"
+                      onClick={() => setNewTeamForm({ ...newTeamForm, roleName: preset, title: preset })}
+                      className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 hover:text-white transition-colors"
+                    >
+                      + {preset}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Permissions Checkboxes */}
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-2">Custom Access Permissions</label>
-                <div className="space-y-2 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-xs">
-                  <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                <label className="block text-xs font-semibold text-gray-300 mb-1">Designation Title</label>
+                <input
+                  type="text"
+                  value={newTeamForm.title}
+                  onChange={(e) => setNewTeamForm({ ...newTeamForm, title: e.target.value })}
+                  placeholder="e.g. Senior Lead Executive"
+                  className="w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-[#6A00FF]"
+                />
+              </div>
+
+              {/* Granular Permissions Checkboxes */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-2">Assign Custom Access Permissions</label>
+                <div className="space-y-2.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs">
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={newTeamForm.permissions.includes('manage_leads')}
@@ -1374,12 +1410,69 @@ export default function AdminDashboard() {
                           : newTeamForm.permissions.filter(p => p !== 'manage_leads');
                         setNewTeamForm({ ...newTeamForm, permissions: perms });
                       }}
-                      className="rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
                     />
-                    <span>Manage Leads (View, Edit Status, Notes, Call & WhatsApp)</span>
+                    <div>
+                      <span className="font-bold text-white block">Manage Leads</span>
+                      <span className="text-[11px] text-gray-400">View inquiries, update lead status, write notes, and 1-tap call/WhatsApp clients.</span>
+                    </div>
                   </label>
 
-                  <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newTeamForm.permissions.includes('create_leads')}
+                      onChange={(e) => {
+                        const perms = e.target.checked 
+                          ? [...newTeamForm.permissions, 'create_leads']
+                          : newTeamForm.permissions.filter(p => p !== 'create_leads');
+                        setNewTeamForm({ ...newTeamForm, permissions: perms });
+                      }}
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                    />
+                    <div>
+                      <span className="font-bold text-white block">Create & Add Leads</span>
+                      <span className="text-[11px] text-gray-400">Enter manual client leads acquired through offline calls or meetings.</span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newTeamForm.permissions.includes('export_leads')}
+                      onChange={(e) => {
+                        const perms = e.target.checked 
+                          ? [...newTeamForm.permissions, 'export_leads']
+                          : newTeamForm.permissions.filter(p => p !== 'export_leads');
+                        setNewTeamForm({ ...newTeamForm, permissions: perms });
+                      }}
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                    />
+                    <div>
+                      <span className="font-bold text-white block">Export Leads (CSV)</span>
+                      <span className="text-[11px] text-gray-400">Download formatted client contact and project data into spreadsheets.</span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newTeamForm.permissions.includes('delete_leads')}
+                      onChange={(e) => {
+                        const perms = e.target.checked 
+                          ? [...newTeamForm.permissions, 'delete_leads']
+                          : newTeamForm.permissions.filter(p => p !== 'delete_leads');
+                        setNewTeamForm({ ...newTeamForm, permissions: perms });
+                      }}
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                    />
+                    <div>
+                      <span className="font-bold text-white block">Delete Leads</span>
+                      <span className="text-[11px] text-gray-400">Permission to permanently remove archived or spam inquiries.</span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={newTeamForm.permissions.includes('view_analytics')}
@@ -1389,12 +1482,15 @@ export default function AdminDashboard() {
                           : newTeamForm.permissions.filter(p => p !== 'view_analytics');
                         setNewTeamForm({ ...newTeamForm, permissions: perms });
                       }}
-                      className="rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
                     />
-                    <span>View Analytics & Conversion Metrics</span>
+                    <div>
+                      <span className="font-bold text-white block">View Analytics & Pipeline Metrics</span>
+                      <span className="text-[11px] text-gray-400">Inspect total inquiries, conversion rates, and performance overview.</span>
+                    </div>
                   </label>
 
-                  <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                  <label className="flex items-start gap-2.5 text-gray-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={newTeamForm.permissions.includes('settings')}
@@ -1404,9 +1500,12 @@ export default function AdminDashboard() {
                           : newTeamForm.permissions.filter(p => p !== 'settings');
                         setNewTeamForm({ ...newTeamForm, permissions: perms });
                       }}
-                      className="rounded border-white/20 text-[#6A00FF] focus:ring-0"
+                      className="mt-0.5 rounded border-white/20 text-[#6A00FF] focus:ring-0"
                     />
-                    <span>Access Settings & Change Own Password</span>
+                    <div>
+                      <span className="font-bold text-white block">Security & Password Management</span>
+                      <span className="text-[11px] text-gray-400">Access security tab and change own login password with old password.</span>
+                    </div>
                   </label>
                 </div>
               </div>

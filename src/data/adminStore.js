@@ -163,12 +163,20 @@ export function changeAdminPassword(oldPassword, newPassword) {
   return { success: true, message: 'Password updated successfully!' };
 }
 
-// Superadmin resets another user's password directly
+// Superadmin resets another user's password directly (cannot reset superadmin itself)
 export function resetUserPasswordBySuperAdmin(targetUserId, newPassword) {
   initAdminStore();
   const currentSession = getCurrentAdminUser();
   if (!currentSession || currentSession.role !== 'superadmin') {
     return { success: false, error: 'Unauthorized: Only Superadmin can reset staff passwords.' };
+  }
+
+  // Enforce rule: Superadmin cannot reset itself directly, must use old password in settings
+  if (targetUserId === 'usr_superadmin_01' || targetUserId === currentSession.id) {
+    return { 
+      success: false, 
+      error: 'Security Policy: Superadmin password cannot be reset directly. Please change your password through the Security & Password tab by verifying your current password.' 
+    };
   }
 
   if (!newPassword || newPassword.length < 6) {
@@ -180,6 +188,14 @@ export function resetUserPasswordBySuperAdmin(targetUserId, newPassword) {
 
   if (userIndex === -1) {
     return { success: false, error: 'Target user not found.' };
+  }
+
+  // Extra check: prevent resetting any user marked as superadmin
+  if (users[userIndex].role === 'superadmin' || users[userIndex].id === 'usr_superadmin_01') {
+    return {
+      success: false,
+      error: 'Superadmin accounts can only be changed via old password verification.'
+    };
   }
 
   users[userIndex].password = newPassword;
@@ -200,15 +216,16 @@ export function getTeamMembers() {
     name: u.name,
     email: u.email,
     role: u.role,
-    title: u.title || (u.role === 'superadmin' ? 'Super Admin' : 'Website Manager'),
+    roleName: u.roleName || (u.role === 'superadmin' ? 'Super Admin' : u.role),
+    title: u.title || (u.role === 'superadmin' ? 'Principal Director' : 'Website Manager'),
     permissions: u.permissions || [],
     createdAt: u.createdAt,
     avatarBg: u.avatarBg || 'bg-blue-600',
-    isPrimarySuperadmin: u.id === 'usr_superadmin_01'
+    isPrimarySuperadmin: u.id === 'usr_superadmin_01' || u.role === 'superadmin'
   }));
 }
 
-export function addTeamMember({ name, email, password, role = 'manager', title = 'Operations Lead', permissions = ['manage_leads'] }) {
+export function addTeamMember({ name, email, password, role = 'custom', roleName = 'Lead Manager', title = 'Operations Lead', permissions = ['manage_leads'] }) {
   initAdminStore();
   const currentSession = getCurrentAdminUser();
   if (!currentSession || currentSession.role !== 'superadmin') {
@@ -226,7 +243,7 @@ export function addTeamMember({ name, email, password, role = 'manager', title =
     return { success: false, error: 'Password must be at least 6 characters long.' };
   }
 
-  const avatarColors = ['bg-indigo-600', 'bg-blue-600', 'bg-emerald-600', 'bg-pink-600', 'bg-amber-600', 'bg-cyan-600'];
+  const avatarColors = ['bg-indigo-600', 'bg-blue-600', 'bg-emerald-600', 'bg-pink-600', 'bg-amber-600', 'bg-cyan-600', 'bg-violet-600'];
   const randomColor = avatarColors[Math.floor(Math.random() * avatarColors.length)];
 
   const newUser = {
@@ -235,6 +252,7 @@ export function addTeamMember({ name, email, password, role = 'manager', title =
     email: normalizedEmail,
     password: password,
     role: role,
+    roleName: roleName.trim() || 'Custom Role',
     title: title.trim(),
     permissions: permissions,
     createdAt: new Date().toISOString(),
