@@ -176,6 +176,10 @@ export default function Footer() {
             <span>GSTIN: <strong className="text-gray-400 font-mono">{COMPANY_INFO.gstin}</strong></span>
             <span>•</span>
             <span className="text-[#a855f7] font-semibold">BUILD • GROW • THRIVE</span>
+            <span>•</span>
+            <Link to="/login" className="text-gray-500 hover:text-gray-300 transition-colors">
+              Admin Portal
+            </Link>
           </div>
         </div>
 

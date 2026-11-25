@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PhoneQuickBar from './components/PhoneQuickBar';
@@ -9,6 +9,8 @@ import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import LegalDirectoryPage from './pages/LegalDirectoryPage';
 import LegalPolicyPage from './components/LegalPolicyPage';
+import LoginPage from './pages/LoginPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 import SolutionsSection from './components/SolutionsSection';
 import ProblemSolvingMatrix from './components/ProblemSolvingMatrix';
@@ -19,6 +21,9 @@ import ContactSection from './components/ContactSection';
 
 export default function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isAdminRoute = location.pathname.startsWith('/admin') || location.pathname === '/login';
 
   // Auto-redirect legacy #hash to real /path URLs
   React.useEffect(() => {
@@ -27,7 +32,8 @@ export default function App() {
       const validRoutes = [
         'privacy', 'terms', 'refund', 'delivery', 'grievance', 'disclaimer',
         'data-deletion', 'user-data-deletion',
-        'legal', 'solutions', 'problem-solving', 'products', 'about', 'contact'
+        'legal', 'solutions', 'problem-solving', 'products', 'about', 'contact',
+        'login', 'admin'
       ];
       if (validRoutes.includes(hash)) {
         if (hash === 'user-data-deletion') {
@@ -48,8 +54,8 @@ export default function App() {
       {/* Scroll to top on every route change */}
       <ScrollToTop />
 
-      {/* Top Navbar */}
-      <Navbar />
+      {/* Top Navbar (Public website only) */}
+      {!isAdminRoute && <Navbar />}
 
       {/* Main Routed Page Content */}
       <main className="flex-grow">
@@ -122,19 +128,24 @@ export default function App() {
           <Route path="/grievance" element={<div className="pt-20"><LegalPolicyPage policyId="grievance" /></div>} />
           <Route path="/disclaimer" element={<div className="pt-20"><LegalPolicyPage policyId="disclaimer" /></div>} />
 
+          {/* Admin & Lead Management Portal */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
+
           {/* Fallback to Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
-      {/* Footer with direct links to all legal pages */}
-      <Footer />
+      {/* Footer with direct links to all legal pages (Public website only) */}
+      {!isAdminRoute && <Footer />}
 
-      {/* Floating Action Bar for Mobile Phones */}
-      <PhoneQuickBar />
+      {/* Floating Action Bar for Mobile Phones (Public website only) */}
+      {!isAdminRoute && <PhoneQuickBar />}
 
-      {/* Statutory Cookie Consent Banner */}
-      <CookieBanner />
+      {/* Statutory Cookie Consent Banner (Public website only) */}
+      {!isAdminRoute && <CookieBanner />}
     </div>
   );
 }

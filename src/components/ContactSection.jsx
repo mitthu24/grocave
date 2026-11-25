@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { COMPANY_INFO } from '../data/companyData';
+import { addLead } from '../data/adminStore';
 import { 
   Phone, 
   Mail, 
@@ -46,7 +47,22 @@ export default function ContactSection({ prefillData }) {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate submission / store locally
+    // Save lead into persistent admin store
+    try {
+      addLead({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        service: formData.service,
+        budget: formData.budget,
+        message: formData.message,
+        source: 'Website Contact Form'
+      });
+    } catch (err) {
+      console.error('Failed to save lead to store:', err);
+    }
+
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
