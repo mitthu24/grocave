@@ -123,8 +123,12 @@ export default function AboutSection({ onOpenContact }) {
                   <strong className="text-white font-mono">{COMPANY_INFO.registrationDate}</strong>
                 </div>
                 <div className="pt-2">
-                  <span className="text-gray-400 block mb-1">Business Address:</span>
-                  <p className="text-gray-300 leading-snug">{COMPANY_INFO.businessAddress.full}</p>
+                  <span className="text-gray-400 block mb-1 font-semibold text-white">Office Address:</span>
+                  <p className="text-gray-300 leading-snug">{COMPANY_INFO.officeAddress.full}</p>
+                </div>
+                <div className="pt-2">
+                  <span className="text-gray-400 block mb-1 text-[11px]">Registered Address:</span>
+                  <p className="text-gray-400 leading-snug text-[11px]">{COMPANY_INFO.registeredAddress.full}</p>
                 </div>
               </div>
 

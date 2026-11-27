@@ -12,7 +12,8 @@ Official corporate website for **GROCAVE**, an enterprise software engineering f
 - **Constitution:** Proprietorship
 - **GSTIN:** `10BHSPM4951N1ZU`
 - **Registration Date:** 29/06/2022
-- **Business Address:** Dhoi Branch Post Office, BUILDING NATHUNI MAHATO, DHOI Road, DHOI, Darbhanga, Bihar, 846009, India
+- **Office Address:** Chhalera, Sector-44, Noida, Uttar Pradesh, 201303, India
+- **Registered Address:** Dhoi Branch Post Office, BUILDING NATHUNI MAHATO, DHOI Road, DHOI, Darbhanga, Bihar, 846009, India
 - **Hotline Phone:** [+91 73710 05525](tel:7371005525)
 - **Official Email:** [info@grocave.online](mailto:info@grocave.online)
 

@@ -17,7 +17,16 @@ export const COMPANY_INFO = {
     whatsapp: "https://wa.me/917371005525?text=Hello%20Grocave%20Team%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.",
   },
 
-  businessAddress: {
+  officeAddress: {
+    line1: "Chhalera, Sector-44",
+    city: "Noida",
+    state: "Uttar Pradesh",
+    pincode: "201303",
+    country: "India",
+    full: "Chhalera, Sector-44, Noida, Uttar Pradesh, 201303, India"
+  },
+
+  registeredAddress: {
     line1: "BUILDING NATHUNI MAHATO, DHOI Road",
     line2: "Dhoi Branch Post Office, DHOI",
     city: "Darbhanga",
@@ -25,6 +34,15 @@ export const COMPANY_INFO = {
     pincode: "846009",
     country: "India",
     full: "Dhoi Branch Post Office, BUILDING NATHUNI MAHATO, DHOI Road, DHOI, Darbhanga, Bihar, 846009, India"
+  },
+
+  businessAddress: {
+    line1: "Chhalera, Sector-44",
+    city: "Noida",
+    state: "Uttar Pradesh",
+    pincode: "201303",
+    country: "India",
+    full: "Chhalera, Sector-44, Noida, Uttar Pradesh, 201303, India"
   },
 
   compliance: {

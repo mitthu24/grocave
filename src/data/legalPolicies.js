@@ -248,8 +248,12 @@ export const LEGAL_POLICIES = {
             detail: COMPANY_INFO.registrationDate
           },
           {
-            title: "Principal Business Address:",
-            detail: COMPANY_INFO.businessAddress.full
+            title: "Office Address:",
+            detail: COMPANY_INFO.officeAddress.full
+          },
+          {
+            title: "Registered Statutory Address:",
+            detail: COMPANY_INFO.registeredAddress.full
           }
         ]
       },
@@ -259,7 +263,7 @@ export const LEGAL_POLICIES = {
         • Name / Cell: ${COMPANY_INFO.compliance.grievanceOfficer}
         • Direct Telephone / WhatsApp: ${COMPANY_INFO.contact.phoneFormatted} (Call: ${COMPANY_INFO.contact.phone})
         • Official Email: ${COMPANY_INFO.compliance.grievanceEmail}
-        • Postal Communication: ${COMPANY_INFO.businessAddress.full}`
+        • Office Postal Communication: ${COMPANY_INFO.officeAddress.full} (Registered Address: ${COMPANY_INFO.registeredAddress.full})`
       },
       {
         heading: "4. Grievance Redressal Escalation Matrix",
@@ -360,7 +364,8 @@ export const LEGAL_POLICIES = {
         • Contact Cell: ${COMPANY_INFO.compliance.grievanceOfficer}
         • Email: ${COMPANY_INFO.compliance.grievanceEmail}
         • Telephone / WhatsApp: ${COMPANY_INFO.contact.phoneFormatted} (Call: ${COMPANY_INFO.contact.phone})
-        • Business Address: ${COMPANY_INFO.businessAddress.full}`
+        • Office Address: ${COMPANY_INFO.officeAddress.full}
+        • Registered Statutory Address: ${COMPANY_INFO.registeredAddress.full}`
       }
     ]
   }

@@ -130,25 +130,29 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Business Address Contact */}
+          {/* Office Address Contact */}
           <div className="lg:col-span-3 space-y-3">
-            <div className="text-xs uppercase tracking-wider font-bold text-white">Business Address</div>
-            <div className="space-y-2.5 text-gray-300">
+            <div className="text-xs uppercase tracking-wider font-bold text-white">Office Address</div>
+            <div className="space-y-2 text-gray-300">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#a855f7] flex-shrink-0 mt-0.5" />
-                <span className="text-[11px] leading-relaxed">
-                  {COMPANY_INFO.businessAddress.full}
-                </span>
+                <div className="text-[11px] leading-relaxed">
+                  <span className="text-white font-semibold block">Office:</span>
+                  <span>{COMPANY_INFO.officeAddress.full}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="text-[10px] text-gray-400 pl-6 leading-relaxed border-l-2 border-white/10 ml-2">
+                <span className="text-gray-300 font-medium">Registered:</span> {COMPANY_INFO.registeredAddress.full}
+              </div>
+              <div className="flex items-center gap-2 pt-1">
                 <Phone className="w-4 h-4 text-[#a855f7] flex-shrink-0" />
-                <a href={`tel:${COMPANY_INFO.contact.phone}`} className="hover:text-white font-semibold">
+                <a href={`tel:${COMPANY_INFO.contact.phone}`} className="hover:text-white font-semibold text-xs">
                   {COMPANY_INFO.contact.phoneFormatted}
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#a855f7] flex-shrink-0" />
-                <a href={`mailto:${COMPANY_INFO.contact.email}`} className="hover:text-white truncate">
+                <a href={`mailto:${COMPANY_INFO.contact.email}`} className="hover:text-white truncate text-xs">
                   {COMPANY_INFO.contact.email}
                 </a>
               </div>

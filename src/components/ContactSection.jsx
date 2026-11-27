@@ -159,17 +159,25 @@ export default function ContactSection({ prefillData }) {
               </div>
             </a>
 
-            {/* Business Address Details */}
+            {/* Office Address Details */}
             <div className="p-5 rounded-2xl bg-[#141420] border border-white/10">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-[#b992ff] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <div className="text-xs text-gray-300">
-                  <div className="font-bold text-white text-sm mb-1">Business Address</div>
-                  <p className="leading-relaxed mb-2">
-                    {COMPANY_INFO.businessAddress.full}
-                  </p>
+                <div className="text-xs text-gray-300 space-y-2">
+                  <div>
+                    <div className="font-bold text-white text-sm mb-1">Office Address</div>
+                    <p className="leading-relaxed">
+                      {COMPANY_INFO.officeAddress.full}
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-white/5">
+                    <span className="text-gray-400 text-[11px] block mb-0.5">Registered Address:</span>
+                    <p className="leading-relaxed text-[11px] text-gray-400">
+                      {COMPANY_INFO.registeredAddress.full}
+                    </p>
+                  </div>
                   <div className="text-[11px] text-gray-400 pt-2 border-t border-white/5 flex flex-wrap gap-x-3 gap-y-1">
                     <span>Trade Name: <strong className="text-white">{COMPANY_INFO.tradeName}</strong></span>
                     <span>GSTIN: <strong className="text-white font-mono">{COMPANY_INFO.gstin}</strong></span>

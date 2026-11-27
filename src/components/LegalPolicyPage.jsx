@@ -114,8 +114,11 @@ export default function LegalPolicyPage({ policyId }) {
             <div className="flex items-start gap-2">
               <MapPin className="w-4 h-4 text-[#a855f7] flex-shrink-0 mt-0.5" />
               <span>
-                <strong className="text-white block">Business Address:</strong>
-                {COMPANY_INFO.businessAddress.full}
+                <strong className="text-white block">Office Address:</strong>
+                {COMPANY_INFO.officeAddress.full}
+                <span className="block text-[10px] text-gray-400 mt-1">
+                  <strong className="text-gray-300">Registered:</strong> {COMPANY_INFO.registeredAddress.full}
+                </span>
               </span>
             </div>
             <div className="flex items-start gap-2">
