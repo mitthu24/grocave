@@ -12,8 +12,8 @@ export const COMPANY_INFO = {
   contact: {
     phone: "7371005525",
     phoneFormatted: "+91 73710 05525",
-    email: "info.grocave@gmail.com",
-    supportEmail: "info.grocave@gmail.com",
+    email: "info@grocave.online",
+    supportEmail: "info@grocave.online",
     whatsapp: "https://wa.me/917371005525?text=Hello%20Grocave%20Team%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.",
   },
 
@@ -29,7 +29,7 @@ export const COMPANY_INFO = {
 
   compliance: {
     grievanceOfficer: "Grocave Compliance & Grievance Cell",
-    grievanceEmail: "info.grocave@gmail.com",
+    grievanceEmail: "info@grocave.online",
     responseSLA: "Within 24-48 business hours",
     jurisdiction: "Competent courts in Darbhanga, Bihar, India"
   },
